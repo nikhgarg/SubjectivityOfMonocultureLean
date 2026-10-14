@@ -1,0 +1,197 @@
+\usepackage{url}
+
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, shapes.misc, fit, backgrounds, calc, matrix}
+
+\tikzset{
+    >=Latex,
+    font=\sffamily\large,
+    node distance=1.5cm and 3cm,
+    dag_result/.style={
+        rectangle,
+        draw=green!70!black,
+        fill=green!15,
+        very thick,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_lemma/.style={
+        rounded rectangle,
+        draw=orange!80!black,
+        fill=yellow!20,
+        very thick,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_model/.style={
+        ellipse,
+        draw=blue!70!black,
+        fill=blue!12,
+        very thick,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=4.5cm,
+        align=center
+    },
+    dag_unformalized/.style={
+        rectangle,
+        draw=gray!60!black,
+        fill=gray!10,
+        very thick,
+        dashed,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_conditional/.style={
+        rectangle,
+        rounded corners,
+        draw=orange!80!black,
+        fill=orange!10,
+        very thick,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_partial/.style={
+        rectangle,
+        rounded corners,
+        draw=yellow!55!black,
+        fill=yellow!10,
+        very thick,
+        dashed,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_scaffold/.style={
+        rectangle,
+        draw=gray!55!black,
+        fill=white,
+        very thick,
+        dotted,
+        minimum width=4.5cm,
+        minimum height=1.5cm,
+        text width=5cm,
+        align=center
+    },
+    dag_caveat/.style={
+        diamond,
+        draw=red!70!black,
+        fill=red!10,
+        minimum width=4cm,
+        align=center,
+        inner sep=0pt,
+        font=\sffamily\small
+    },
+    % Lean-checked formal dependency edge. Use only for dependencies that are
+    % discharged in the Lean proof path represented by the target node.
+    dag_arrow/.style={
+        -{Latex[length=3.0mm,width=2.1mm]},
+        very thick,
+        shorten >=1.5pt,
+        shorten <=1.5pt
+    },
+    % Non-closed or non-required roadmap edge: unresolved, conditional, caveat,
+    % paper-route, or explicitly bypassed dependency.
+    dag_dashed_arrow/.style={
+        -{Latex[length=3.0mm,width=2.1mm]},
+        very thick,
+        dashed,
+        shorten >=1.5pt,
+        shorten <=1.5pt
+    },
+    dag_template_legend/.style={
+        outer sep=0pt,
+        minimum width=3cm,
+        minimum height=1.25cm,
+        text width=2.72cm,
+        inner sep=2pt,
+        font=\sffamily\scriptsize,
+        align=center
+    },
+    dag_caveat_legend/.style={
+        dag_caveat,
+        dag_template_legend,
+        minimum width=2.15cm,
+        minimum height=0.9cm,
+        text width=1.9cm,
+        inner sep=1pt,
+        font=\sffamily\tiny
+    },
+    dag_template_note/.style={
+        rectangle,
+        draw=gray!50,
+        fill=gray!5,
+        rounded corners,
+        text width=13cm,
+        align=left,
+        font=\sffamily\small,
+        inner sep=6pt
+    }
+}
+
+% Legend Helper
+\newcommand{\daglegend}[2]{
+  \node[
+    draw,
+    rounded corners,
+    very thick,
+    fill=none,
+    fit=#1,
+    inner sep=10pt,
+    outer sep=0pt,
+    % keep label handling explicit below
+  ] (#2) {};
+  \coordinate (dagLegendSouthWest) at (#2.south west);
+  \node[
+    font=\sffamily\bfseries\large,
+    fill=white,
+    anchor=south west,
+    inner sep=1pt
+  ] at ($(#2.north west) + (0.08cm,0.06cm)$) {Legend};
+}
+
+\newcommand{\daglegendAtTopLeft}[2]{
+    \node[draw, rounded corners, very thick, fit=#1, inner sep=12pt, label=above:\textbf{\Large Legend}] (#2) {};
+}
+
+\newcommand{\dagPaperMetadata}[5]{
+  \node[
+    align=left,
+    font=\sffamily\small,
+    text width=15cm,
+    minimum width=15cm,
+    inner sep=0pt,
+    outer sep=0pt,
+    anchor=north west,
+    name=dagPaperMetadata
+  ] at (0,0) {
+    \textbf{Paper:} #1\\
+    \textbf{Authors:} #2\\
+    \textbf{Publication venue:} #3\\
+    \textbf{Year:} #4\\
+    \if\relax\detokenize{#5}\relax\relax\else
+      \textbf{Formalized PDF:} \url{#5}
+    \fi
+  };
+}
+
+\newcommand{\dagPaperLegendRightOfMetadata}[1]{
+  \begin{scope}[shift={($(dagPaperMetadata.north east) + (2.20cm,-2.10cm)$)}]
+    #1
+  \end{scope}
+}
+
+\newenvironment{dagPaperBody}{
+  \coordinate (dagPaperGraphStart) at ($(dagPaperMetadata.south west |- dagLegendSouthWest) + (2.60cm,-1.35cm)$);
+  \begin{scope}[shift={(dagPaperGraphStart)}]
+}{
+  \end{scope}
+}

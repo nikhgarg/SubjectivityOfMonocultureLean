@@ -1,0 +1,60 @@
+\documentclass[tikz,border=10pt]{standalone}
+\input{dag_preamble.tex}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\normalsize]
+\node[anchor=west,font=\sffamily\bfseries\Large] at (-2.8,2.7)
+  {The Subjectivity of Monoculture};
+\node[anchor=west,font=\sffamily\small] at (-2.8,2.0)
+  {Named theory in the October 14, 2026 working draft};
+\node[dag_model,text width=2.6cm,minimum width=3cm,minimum height=0.8cm,
+      font=\sffamily\scriptsize] at (11.0,2.5) {Definitions and conditions};
+\node[dag_result,text width=2.6cm,minimum width=3cm,minimum height=0.8cm,
+      font=\sffamily\scriptsize] at (15.0,2.5) {Exact named results};
+
+\node[dag_model] (Null) at (0,0)
+  {\textbf{Response nulls}\\Product-Bernoulli laws\\Definition 1: IRT null};
+\node[dag_result] (Mixture) at (7,0)
+  {\textbf{Theorem 1}\\Bernoulli mixture representation\\At most $2^m$ components};
+\node[dag_result] (Nested) at (14,0)
+  {\textbf{Lemma 6}\\IRT null families are nested};
+
+\node[dag_model] (Ladder) at (0,-3.5)
+  {\textbf{Definitions 2 and 3}\\Null ladder, selected fit\\and minimal excess};
+\node[dag_result] (Absorption) at (7,-3.5)
+  {\textbf{Proposition 2}\\Minimal excess is nonincreasing};
+\node[dag_result] (Residual) at (14,-3.5)
+  {\textbf{Theorem 3}\\Residual dependence vanishes\\Discrepancy controls expectations};
+
+\node[dag_model] (Population) at (0,-7)
+  {\textbf{Fixed-$r$ factor null}\\Definition 4:\\population-specific best fit};
+\node[dag_result] (Relativity) at (7,-7)
+  {\textbf{Proposition 4}\\Restriction and refitting\\may give different predictions};
+
+\node[dag_model] (Heterogeneity) at (0,-10.5)
+  {\textbf{Fitted probabilities and $h$}\\Factor covariances\\chosen fit; local error set};
+\node[dag_result] (Stability) at (7,-10.5)
+  {\textbf{Theorem 5}\\Local distance to the prediction fiber\\is at most $C\varepsilon/\sqrt h$};
+\node[dag_model] (Identification) at (14,-10.5)
+  {\textbf{Assumption 1}\\Local constant rank\\and Jacobian lower bound};
+
+\node[dag_result] (Debiasing) at (0,-14)
+  {\textbf{Proposition 7}\\Calibration-error tracking\\and exact demeaning for IID rows};
+\node[dag_result] (Empirical) at (7,-14)
+  {\textbf{Remark 1}\\Empirical residual covariance\\and correlation convergence};
+\node[dag_result] (IRTIdentification) at (14,-14)
+  {\textbf{Lemma 8}\\Increasing dot-product links\\give the identification bound};
+
+\draw[dag_arrow] (Null) -- (Mixture);
+\draw[dag_arrow] (Null.north) -- ++(0,0.75) -| (Nested.north);
+\draw[dag_arrow] (Ladder) -- (Absorption);
+\draw[dag_arrow] (Null.south) -- ++(0,-0.65) -| (Residual.north);
+\draw[dag_arrow] (Ladder.south) -- ++(0,-0.65) -| (Residual.south);
+\draw[dag_arrow] (Population) -- (Relativity);
+\draw[dag_arrow] (Population) -- (Heterogeneity);
+\draw[dag_arrow] (Heterogeneity) -- (Stability);
+\draw[dag_arrow] (Identification) -- (Stability);
+\draw[dag_arrow] (IRTIdentification) -- (Identification);
+\draw[dag_arrow] (Residual.east) -- ++(1.05,0)
+  |- ($(Empirical.south)+(0,-0.65)$) -- (Empirical.south);
+\end{tikzpicture}
+\end{document}

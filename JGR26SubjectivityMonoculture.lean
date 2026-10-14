@@ -1,0 +1,1 @@
+import JGR26SubjectivityMonoculture.ProofInterface
