@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "artifact_kind",
+    "paper",
+    "state",
+    "acceptance_credential",
+    "input_files",
+    "source_map_item_ids",
+    "transport_state",
+    "reason",
+    "blocker_codes",
+    "resolution_needed",
+    "assessment"
+  ],
+  "properties": {
+    "schema": {
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "artifact_kind": {
+      "const": "pending_result_classification_intake"
+    },
+    "paper": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "const": "pending"
+    },
+    "acceptance_credential": {
+      "const": false
+    },
+    "input_files": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "FINAL_VALIDATION_REPORT.md",
+          "audit/paper_statement_map.json",
+          "PaperInterface.lean",
+          "ProofInterface.lean"
+        ]
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "evidence_refs": {
+      "description": "Additional repository-relative retained evidence. Each literal path and digest is checked before a finding can cite it; this grants no mathematical acceptance.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/retained_input_reference"
+      }
+    },
+    "retained_inputs": {
+      "description": "Exact archived discovery bytes; input_ref keeps the original repository path, artifact_ref is paper-relative. Current input_files remains current.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["input_ref", "artifact_ref", "byte_length"],
+        "properties": {
+          "input_ref": {
+            "$ref": "#/definitions/retained_input_reference"
+          },
+          "artifact_ref": {
+            "$ref": "#/definitions/retained_input_reference"
+          },
+          "byte_length": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "source_map_item_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "transport_state": {
+      "enum": [
+        "current_basis_available",
+        "historical_only",
+        "unavailable"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "blocker_codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "review_not_started",
+          "review_context_missing",
+          "retained_basis_unavailable",
+          "selected_graph_exact_axiom_closure_not_serialized",
+          "selected_graph_dependency_receipt_not_serialized",
+          "selected_graph_not_current_without_semantic_revalidation",
+          "legacy_protocol_not_migrated",
+          "no_accepted_graph",
+          "current_source_semantics_not_revalidated",
+          "current_proof_binding_not_revalidated",
+          "source_inventory_unavailable"
+        ]
+      }
+    },
+    "resolution_needed": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "\\S"
+      }
+    },
+    "assessment": {
+      "type": "null"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "audit_learning_observation.schema.json#/definitions/finding"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "context_requests": {
+      "type": "array",
+      "items": {
+        "$ref": "audit_learning_observation.schema.json#/definitions/context_request"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema": {
+            "const": 2
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "findings",
+          "context_requests"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "findings"
+              ]
+            },
+            {
+              "required": [
+                "context_requests"
+              ]
+            },
+            {
+              "required": [
+                "retained_inputs"
+              ]
+            },
+            {
+              "required": [
+                "evidence_refs"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "retained_input_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

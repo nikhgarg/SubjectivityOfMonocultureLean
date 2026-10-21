@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Repository location of unchanged native AML audit owners",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "artifact_kind", "acceptance_credential", "paper", "repository", "code_revision", "code_roots", "code_bindings", "native_evidence", "retention_rule"],
+  "properties": {
+    "schema": {"const": 1},
+    "artifact_kind": {"const": "aml_audit_repository_source"},
+    "acceptance_credential": {"const": false},
+    "paper": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_]*$"},
+    "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+    "code_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "code_roots": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "code_bindings": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["path", "sha256", "git_blob_sha1"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"$ref": "#/definitions/sha256"},
+          "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "native_ref": {"$ref": "#/definitions/ref"}
+        }
+      }
+    },
+    "native_evidence": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["state", "origin", "snapshot_sha256", "projection_sha256", "input_refs"],
+          "properties": {
+            "state": {"const": "retained_native_snapshot"},
+            "origin": {
+              "type": "object", "additionalProperties": false, "required": ["repository", "revision"],
+              "properties": {
+                "repository": {"type": "string", "minLength": 1},
+                "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+              }
+            },
+            "snapshot_sha256": {"$ref": "#/definitions/sha256"},
+            "projection_sha256": {"$ref": "#/definitions/sha256"},
+            "input_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/ref"}}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["state", "recovery_task_id", "missing_owner_kinds", "reason"],
+          "properties": {
+            "state": {"const": "recovery_required"},
+            "recovery_task_id": {"type": "string", "minLength": 1},
+            "missing_owner_kinds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "retention_rule": {"const": "native_owners_and_required_evidence_in_git_before_count_readiness"}
+  },
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ref": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/definitions/sha256"}}
+    }
+  }
+}

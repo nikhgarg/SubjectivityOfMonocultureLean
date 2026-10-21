@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "artifact_kind": "aml_audit_repository_source",
+  "acceptance_credential": false,
+  "paper": "JGR26SubjectivityMonoculture",
+  "repository": "nikhgarg/SubjectivityOfMonocultureLean",
+  "code_revision": "5b579dcb8d158cab4c8ddf3d9ae98ac09447cc5a",
+  "code_roots": [
+    "JGR26SubjectivityMonoculture",
+    "JGR26SubjectivityMonoculture.lean",
+    "ProofChecks.lean"
+  ],
+  "code_bindings": [
+    {
+      "path": "JGR26SubjectivityMonoculture.lean",
+      "sha256": "8ff9fd75a480a12d3a94b8a8a175963893f89b29d5160630d664f0096b07a97c",
+      "git_blob_sha1": "5b1cce14da5264cbfcd7876d4260e8ba388becca"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/AdoptedDraft20261013Interface.lean",
+      "sha256": "23596f6f5c5b08a27b7193ef4743baac9c476f9d8efb7eda3f65e74b2f4021aa",
+      "git_blob_sha1": "88876b835120f598776fa388a76ad3cd72391982"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/BalancedFactors.lean",
+      "sha256": "8b813aea5a7edbe6f2a73524894948457271ac8d932d22329592611f99d65092",
+      "git_blob_sha1": "5b0676750fd80402fcac3341207ecfa77ba39ea8"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/BalancedNormalizationExamples.lean",
+      "sha256": "3ebad4745e912da3a8e35b056450a7d5a023ed8e35667bc5dffb97f23753d919",
+      "git_blob_sha1": "35e72fc25ee03afaac1713a29a5718b183aae707"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/BalancedSourceBridge.lean",
+      "sha256": "b5259c1b6654d3756dd1c1ddd624c4d8d2710bab4caec2b4a00df315fcd26326",
+      "git_blob_sha1": "633698f66a695f5b5683a3d5b820dbd512aa9ef3"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/BilinearConstantRank.lean",
+      "sha256": "10024fb832a70abb5d7eb6a6b314e3bd4c5f2a77f5a4bdcddbcf7d93ca400a4d",
+      "git_blob_sha1": "456af6220d03fa03567212413e5dfb6876ee11d1"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/ConstantRankGeometry.lean",
+      "sha256": "9742d831916ecdd7701b6fa212e845f6d4ef050a333f7044d50673f02228ee6a",
+      "git_blob_sha1": "2a9f646832d81bbd8d5dc42e83f0d77c489e4aec"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/Draft20261013Interface.lean",
+      "sha256": "7e1dfcce453bf97b7ee0940ecd6b0859900dc05dc741f4793298c1fa10dd669c",
+      "git_blob_sha1": "91f6d3a8fb652b48296098f849b74e85c2e016e1"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/EmpiricalMomentTransfer.lean",
+      "sha256": "a10bd7a31385dcdc5a5ae0bcb26b38dc1ce05ea18a8ad6667f962e1957dd35b9",
+      "git_blob_sha1": "ee07e4cc37515d2bd2d91c6100e100ff7c5efe1e"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/EmpiricalResiduals.lean",
+      "sha256": "a3bc6c777860cb0a013c342bd17dab8f39a2c5a1a6eab7c4f371ff5144f4d933",
+      "git_blob_sha1": "740f84229aa5538f4625f833cdfb29b37fdab3e0"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/GenericPopulationNull.lean",
+      "sha256": "6fc3215294448f70e5a3aeb961584914fa08753841a9548500f0e75149e42d70",
+      "git_blob_sha1": "5f5c37911bb5f0827c5647256a2f88dff5ea63c2"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/HeterogeneityCounterexamples.lean",
+      "sha256": "88220945c95651a79f367997a1b97e6074a5f4490a390bdce37e98b3b9630d4b",
+      "git_blob_sha1": "d41db6c5a466c9b87028a433000ea3b9bb066735"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/HeterogeneityGeometry.lean",
+      "sha256": "23717b9e1d64af045a658433ae464fd53ff1325aa1e97b6fe905a873ebc0c921",
+      "git_blob_sha1": "732d05de9cc40bbf7ea6f9c0f8ab68753ddab601"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/LocalFiberStability.lean",
+      "sha256": "93a501813c5446e7df39fab7e2e49fe27ff6aa64505faf45df2be35c0646f222",
+      "git_blob_sha1": "744633b45d16ea22adb5848f95638f67bd428b6b"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/LocalIdentificationStability.lean",
+      "sha256": "5fd8897a47723f960692714db724aa08d8f7fb5e3a99f0ef226cdf9da69ea169",
+      "git_blob_sha1": "7f1b273f8c7c12ff4348a7542df7344004c9156d"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/LogisticPopulationRelativity.lean",
+      "sha256": "b13f08fc0bbbbc6afbfdf88d93c27792ba28e95a47b5c60487b649eb76d8e9e4",
+      "git_blob_sha1": "96394d48dc28ac203c7910b972e9ad22e93435a5"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/MIRTIdentification.lean",
+      "sha256": "ef352d642b353e01ed781dde2dff70b6c61f858e06f31347a93a34900d6a4884",
+      "git_blob_sha1": "65e3ce998e1de2efd7e410378ad4fff0f574f5c3"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/MainTheorems.lean",
+      "sha256": "aaa06b3fcb7c45c723e5bca3402911267209fa8714e3fc5174690a7b3f317181",
+      "git_blob_sha1": "470f749460b260ce620733ec741d9bc0dd38513b"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/PaperInterface.lean",
+      "sha256": "40ef0c227d269aafd6f7a13fda9eb2139aac33f7712d7bfc4a8e10067a163361",
+      "git_blob_sha1": "75dd93eb16f6445ae16bc9631d61a7ecfd81f767"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/PopulationRelativity.lean",
+      "sha256": "31b6293a91852401259bf733fbf36e4d4fb36617022830b863473b3dc8a6a597",
+      "git_blob_sha1": "c6a542f0d9b8a0f0acf7e276d07e5b67f52b1e8b"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/ProofInterface.lean",
+      "sha256": "daaddfee4bbbf8661c3b24b1549fd4d0a697b10720e9a9c62a5e59c3c0eb4681",
+      "git_blob_sha1": "0c36be858f362f68b1d295af2904bffaf2409b5f"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/ResidualCalibration.lean",
+      "sha256": "ace0e206ade8671a3dc03dcb1567392dee42ee776c78c756546166923b45b855",
+      "git_blob_sha1": "bf8f76f2621102c86b6b4d5c16755a6d2045e457"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/ResidualDiscrepancyBridge.lean",
+      "sha256": "b67ebd0322b7f07f797ad9ce719f9a62eaffe9fc09ded247f3947f43e5509ef4",
+      "git_blob_sha1": "3548878efb08acd3788981c9068311b9bab930a2"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/SourceModelDefinitions.lean",
+      "sha256": "dd773ac2b8b7d958a839bc385a35c0a1ed65c0a8e711c009f4fb4711d745cf20",
+      "git_blob_sha1": "daa20cbf490b69cb1c492197b4f0a7401af8f661"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/SourceNormalizationInterface.lean",
+      "sha256": "782f06e3f0d8d17cc3cc7098b54dd8528856236eeb07f59ce8add536b1d0426d",
+      "git_blob_sha1": "64de5b842130178f2286abde6516646a4a1c7503"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/SourcePredictionBridge.lean",
+      "sha256": "3cf38251d4f5a3e7aafad50c96a270b3ad1258799c8df55791207bbdf0b2c835",
+      "git_blob_sha1": "94c95a76feaa783320537a70a6d8aed228779b2a"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/SourceProbabilityBridge.lean",
+      "sha256": "4633edb18649274a0cb71198db367620ae25ec2d27ab2dd8bf4e62f8f32737ee",
+      "git_blob_sha1": "ef071b240fc3f8f1abc14325d80d8403d5eb3f20"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/SourceTheoryPrimitives.lean",
+      "sha256": "b34ea90a230a6f8c8eaf7a71f0cde24fffb18513af815c25ea545df6e73da04a",
+      "git_blob_sha1": "69521bb8b2a288e9d122b62efc2d1a42f7fb88cc"
+    },
+    {
+      "path": "JGR26SubjectivityMonoculture/VertexMixtureMeasure.lean",
+      "sha256": "42b9b86f2906176c2f53f19860c30e600a47e34d55fbb11e401c91eb3ff3c688",
+      "git_blob_sha1": "045e604eec37b2747fca588605758b5778a8e5a5"
+    },
+    {
+      "path": "ProofChecks.lean",
+      "sha256": "8880d3d260b6b887c8ce04cb4b0b9a03f405237f97ad80c7708b3931ac035cbb",
+      "git_blob_sha1": "063bdbdaa5d75987baf1219c3bec1ebf277b0857"
+    }
+  ],
+  "native_evidence": {
+    "state": "recovery_required",
+    "recovery_task_id": "subjectivity-public-native-evidence-locator",
+    "missing_owner_kinds": [
+      "authorized_public_native_evidence_locator"
+    ],
+    "reason": "Native evidence is retained privately. Its repository location, revision bindings and input paths are withheld from this public descriptor. The public transport remains unavailable until an authorized locator is supplied."
+  },
+  "retention_rule": "native_owners_and_required_evidence_in_git_before_count_readiness"
+}

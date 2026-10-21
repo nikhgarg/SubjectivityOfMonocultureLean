@@ -20,3 +20,12 @@ jobs:
           use-github-cache: 'false'
       - name: Check all advertised proofs and their axioms
         run: lake env lean ProofChecks.lean
+
+  audit-schema:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install the audit schema validator
+        run: python3 -m pip install --disable-pip-version-check -r audit/requirements.txt
+      - name: Verify schema copies and the complete code inventory
+        run: python3 audit/verify_audit_source.py

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "version": "result-comparison-2026-10-12",
+  "acceptance_credential": false,
+  "labels": {
+    "exact": "Exact",
+    "source_clarification": "Exact with source clarification",
+    "typos": "Exact with typos",
+    "additional_assumptions": "Exact under additional assumptions",
+    "corrected_result": "Corrected result",
+    "formalization_gap": "Formalization gap",
+    "incorrect": "Incorrect"
+  },
+  "relationships": [
+    "equivalent",
+    "strengthening",
+    "clarified_interpretation",
+    "local_typo",
+    "additional_assumptions",
+    "changed_conclusion",
+    "unresolved"
+  ],
+  "premise_provenance": [
+    "stated_in_result",
+    "stated_elsewhere_in_source",
+    "derived",
+    "equivalent_convention",
+    "supported_interpretation",
+    "additional",
+    "unresolved_source_implication",
+    "conclusion_equivalent"
+  ],
+  "proof_coverage": [
+    "proved",
+    "partial",
+    "assumed_external",
+    "not_started"
+  ],
+  "review_states": [
+    "pending",
+    "accepted",
+    "disputed"
+  ],
+  "activation": "selected_terminal_documents_only",
+  "legacy": "readable_until_explicit_document_migration",
+  "source_review_denominator": "existing_selected_source_claims_only",
+  "rule": "Derive labels from reviewed mathematical facts and authenticated proof coverage. Do not infer facts from report prose. Proof-only repairs preserve Exact; additional finite bounds are extensions when their parameter dependence implies the source rate. Unresolved source implications and circular premises remain gaps. Split materially different clauses. Preserve visibility and unchanged accepted evidence. Incorrect requires confirmed demonstrated full-source-domain statement falsity and no verified replacement within the reviewed comparison. A proof defect or suspected statement error is insufficient. During formalization, attempt a correction; retain factual child findings separately from whole-record approval. A verified replacement uses its substantive repaired category. Source-edition replacement does not retroactively change the archival judgment."
+}

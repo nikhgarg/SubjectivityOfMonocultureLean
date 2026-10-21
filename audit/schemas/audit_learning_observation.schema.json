@@ -1,0 +1,1535 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Private nonaccepting audit-learning observations",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/cohort"
+    },
+    {
+      "$ref": "#/definitions/event"
+    }
+  ],
+  "definitions": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "texts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/text"
+      },
+      "uniqueItems": true
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/text"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha"
+        }
+      }
+    },
+    "refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ref"
+      },
+      "uniqueItems": true
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paper",
+        "source_snapshot_ref",
+        "source_result_ids",
+        "clause_ids",
+        "input_refs",
+        "inclusion_probability"
+      ],
+      "properties": {
+        "paper": {
+          "$ref": "#/definitions/text"
+        },
+        "source_snapshot_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        },
+        "source_result_ids": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/texts"
+            }
+          ]
+        },
+        "clause_ids": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/texts"
+            }
+          ]
+        },
+        "input_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "inclusion_probability": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "source_item_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/text"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "cohort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "artifact_kind",
+        "acceptance_credential",
+        "cohort_id",
+        "registered_at",
+        "registration_mode",
+        "measurement_role",
+        "population_description",
+        "selection_rule",
+        "sampling_design",
+        "sampling_frame_ref",
+        "workflow_ref",
+        "subjects"
+      ],
+      "properties": {
+        "schema": {
+          "const": 1
+        },
+        "artifact_kind": {
+          "const": "audit_learning_cohort"
+        },
+        "acceptance_credential": {
+          "const": false
+        },
+        "cohort_id": {
+          "$ref": "#/definitions/text"
+        },
+        "registered_at": {
+          "$ref": "#/definitions/text"
+        },
+        "registration_mode": {
+          "enum": [
+            "prospective",
+            "retrospective_snapshot"
+          ]
+        },
+        "measurement_role": {
+          "enum": [
+            "development",
+            "population_audit"
+          ]
+        },
+        "population_description": {
+          "$ref": "#/definitions/text"
+        },
+        "selection_rule": {
+          "$ref": "#/definitions/text"
+        },
+        "sampling_design": {
+          "enum": [
+            "targeted",
+            "census_selected",
+            "probability_sample"
+          ]
+        },
+        "sampling_frame_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        },
+        "workflow_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "subjects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/subject"
+          }
+        }
+      }
+    },
+    "start": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_id",
+        "stage",
+        "input_refs",
+        "configuration_refs",
+        "invocation_mode",
+        "predecessor_attempt_id",
+        "subject_scopes"
+      ],
+      "properties": {
+        "attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "stage": {
+          "enum": [
+            "intake",
+            "source_inventory",
+            "mapping",
+            "semantic_match",
+            "proof",
+            "result_relationship",
+            "presentation",
+            "orchestration"
+          ]
+        },
+        "input_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "configuration_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "invocation_mode": {
+          "enum": [
+            "prospective",
+            "retrospective"
+          ]
+        },
+        "predecessor_attempt_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "subject_scopes": {
+          "$ref": "#/definitions/subjectScopes"
+        },
+        "invocation_kind": {
+          "enum": [
+            "judge_call",
+            "deterministic_worker",
+            "manual_intake",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "finish": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_id",
+        "outcome",
+        "reason",
+        "raw_output_ref",
+        "result_refs",
+        "elapsed_seconds",
+        "cost_usd",
+        "usage_ref"
+      ],
+      "properties": {
+        "attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "invalid_output",
+            "failed",
+            "timed_out",
+            "abandoned",
+            "uncertain",
+            "pending_evidence"
+          ]
+        },
+        "reason": {
+          "$ref": "#/definitions/text"
+        },
+        "raw_output_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        },
+        "result_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "elapsed_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "cost_usd": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "usage_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "first_observed_attempt_id",
+        "summary",
+        "evidence_refs",
+        "subject_scopes"
+      ],
+      "properties": {
+        "issue_id": {
+          "$ref": "#/definitions/text"
+        },
+        "first_observed_attempt_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/text"
+            }
+          ]
+        },
+        "summary": {
+          "$ref": "#/definitions/text"
+        },
+        "evidence_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "subject_scopes": {
+          "$ref": "#/definitions/subjectScopes"
+        },
+        "finding": {
+          "$ref": "#/definitions/finding"
+        }
+      }
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "disposition",
+        "origin",
+        "materiality",
+        "repair_state",
+        "rationale",
+        "evidence_refs",
+        "source_error_evidence_refs",
+        "supersedes_event_id"
+      ],
+      "properties": {
+        "issue_id": {
+          "$ref": "#/definitions/text"
+        },
+        "disposition": {
+          "enum": [
+            "pending",
+            "confirmed",
+            "rejected",
+            "superseded"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "source",
+            "formalization",
+            "judge",
+            "presentation",
+            "orchestration",
+            "undetermined"
+          ]
+        },
+        "materiality": {
+          "enum": [
+            "material",
+            "local",
+            "undetermined"
+          ]
+        },
+        "repair_state": {
+          "enum": [
+            "open",
+            "repaired",
+            "not_applicable",
+            "undetermined"
+          ]
+        },
+        "rationale": {
+          "$ref": "#/definitions/text"
+        },
+        "evidence_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "source_error_evidence_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "supersedes_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "artifact_kind",
+        "acceptance_credential",
+        "id",
+        "cohort_id",
+        "cohort_sha256",
+        "recorded_at",
+        "event_kind",
+        "body"
+      ],
+      "properties": {
+        "schema": {
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        },
+        "artifact_kind": {
+          "const": "audit_learning_event"
+        },
+        "acceptance_credential": {
+          "const": false
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^audit-observation-[0-9a-f]{64}$"
+        },
+        "cohort_id": {
+          "$ref": "#/definitions/text"
+        },
+        "cohort_sha256": {
+          "$ref": "#/definitions/sha"
+        },
+        "recorded_at": {
+          "$ref": "#/definitions/text"
+        },
+        "event_kind": {
+          "enum": [
+            "attempt_started",
+            "attempt_finished",
+            "issue_observed",
+            "issue_adjudicated",
+            "context_requested",
+            "context_supplied",
+            "repair_recorded",
+            "learning_linked"
+          ]
+        },
+        "body": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "attempt_started"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "#/definitions/start"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "attempt_finished"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "#/definitions/finish"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "issue_observed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "#/definitions/issue"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "issue_adjudicated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "#/definitions/adjudication"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "context_requested"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 2
+              },
+              "body": {
+                "$ref": "#/definitions/context_requested"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "context_supplied"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 2
+              },
+              "body": {
+                "$ref": "#/definitions/context_supplied"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "repair_recorded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 2
+              },
+              "body": {
+                "$ref": "#/definitions/repair"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "learning_linked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 2
+              },
+              "body": {
+                "$ref": "#/definitions/learning_link"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schema": {
+                "const": 2
+              },
+              "event_kind": {
+                "const": "issue_observed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "required": [
+                  "finding"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schema": {
+                "const": 3
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "event_kind": {
+                "const": "issue_observed"
+              },
+              "body": {
+                "required": [
+                  "finding"
+                ],
+                "properties": {
+                  "finding": {
+                    "required": [
+                      "native_finding_refs"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "issue_observed"
+              },
+              "body": {
+                "required": [
+                  "finding"
+                ],
+                "properties": {
+                  "finding": {
+                    "required": [
+                      "native_finding_refs"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "issue_observed"
+              },
+              "body": {
+                "required": [
+                  "first_observed_attempt_id"
+                ],
+                "properties": {
+                  "first_observed_attempt_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema": {
+                "const": 3
+              },
+              "body": {
+                "required": [
+                  "finding"
+                ],
+                "properties": {
+                  "finding": {
+                    "required": [
+                      "native_finding_refs"
+                    ],
+                    "properties": {
+                      "capture_mode": {
+                        "const": "retrospective_backfill"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "subjectScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paper",
+        "source_item_ids",
+        "clause_ids"
+      ],
+      "properties": {
+        "paper": {
+          "$ref": "#/definitions/text"
+        },
+        "source_item_ids": {
+          "$ref": "#/definitions/texts"
+        },
+        "clause_ids": {
+          "$ref": "#/definitions/texts"
+        }
+      }
+    },
+    "subjectScopes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/subjectScope"
+      },
+      "uniqueItems": true
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "stage",
+        "affected_scopes",
+        "clause_scope",
+        "lean_targets",
+        "evidence",
+        "consequence",
+        "uncertainty",
+        "capture_mode"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/text"
+        },
+        "kind": {
+          "enum": [
+            "unavailable_evidence",
+            "packet_omission",
+            "formalization_mismatch",
+            "unproved_obligation",
+            "source_error_claim",
+            "judge_error_claim",
+            "presentation_issue",
+            "procedural_issue"
+          ]
+        },
+        "stage": {
+          "enum": [
+            "intake",
+            "source_inventory",
+            "mapping",
+            "semantic_match",
+            "proof",
+            "result_relationship",
+            "presentation",
+            "orchestration"
+          ]
+        },
+        "affected_scopes": {
+          "$ref": "#/definitions/subjectScopes"
+        },
+        "clause_scope": {
+          "enum": [
+            "whole_items",
+            "selected_clauses"
+          ]
+        },
+        "lean_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "declaration",
+              "target_sha256"
+            ],
+            "properties": {
+              "declaration": {
+                "$ref": "#/definitions/text"
+              },
+              "target_sha256": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/definitions/sha"
+                  }
+                ]
+              }
+            }
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "artifact_ref",
+              "selector",
+              "kind"
+            ],
+            "properties": {
+              "artifact_ref": {
+                "$ref": "#/definitions/ref"
+              },
+              "selector": {
+                "$ref": "#/definitions/text"
+              },
+              "kind": {
+                "enum": [
+                  "source",
+                  "lean",
+                  "review",
+                  "reproduction",
+                  "report",
+                  "transport"
+                ]
+              }
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "consequence": {
+          "enum": [
+            "review_blocked",
+            "possible_source_error",
+            "possible_formalization_mismatch",
+            "possible_proof_gap",
+            "reporting_only",
+            "procedure_only"
+          ]
+        },
+        "uncertainty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "reason"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "resolved",
+                "missing_evidence",
+                "disputed",
+                "unknown"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        },
+        "capture_mode": {
+          "enum": [
+            "contemporaneous",
+            "retrospective_backfill"
+          ]
+        },
+        "native_finding_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/native_finding_ref"
+          }
+        },
+        "reported_facts": {
+          "$ref": "#/definitions/reported_facts"
+        }
+      }
+    },
+    "context_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "finding_id",
+        "requested_kind",
+        "supplier_owner",
+        "selector",
+        "reason"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/text"
+        },
+        "finding_id": {
+          "$ref": "#/definitions/text"
+        },
+        "requested_kind": {
+          "enum": [
+            "source_passage",
+            "lean_declaration",
+            "lean_proposition",
+            "proof_evidence",
+            "retained_graph",
+            "supplement_inventory",
+            "review_issuance",
+            "report_reference",
+            "mapping_configuration"
+          ]
+        },
+        "supplier_owner": {
+          "$ref": "#/definitions/text"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "paper",
+            "source_item_ids",
+            "clause_ids",
+            "lean_declarations",
+            "artifact_path",
+            "expected_sha256"
+          ],
+          "properties": {
+            "paper": {
+              "$ref": "#/definitions/text"
+            },
+            "source_item_ids": {
+              "$ref": "#/definitions/texts"
+            },
+            "clause_ids": {
+              "$ref": "#/definitions/texts"
+            },
+            "lean_declarations": {
+              "$ref": "#/definitions/texts"
+            },
+            "artifact_path": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/text"
+                }
+              ]
+            },
+            "expected_sha256": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/sha"
+                }
+              ]
+            },
+            "expected_original_audit": {
+              "$ref": "#/definitions/original_audit_expectation"
+            }
+          }
+        },
+        "reason": {
+          "$ref": "#/definitions/text"
+        }
+      }
+    },
+    "context_requested": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "attempt_id",
+        "request"
+      ],
+      "properties": {
+        "issue_id": {
+          "$ref": "#/definitions/text"
+        },
+        "attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "request": {
+          "$ref": "#/definitions/context_request"
+        }
+      }
+    },
+    "context_supplied": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "supplier",
+        "supplied_artifact_refs",
+        "successor_attempt_id",
+        "successor_review_refs",
+        "outcome",
+        "capture_mode"
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/definitions/text"
+        },
+        "supplier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "owner",
+            "identity_assurance"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/definitions/text"
+            },
+            "owner": {
+              "$ref": "#/definitions/text"
+            },
+            "identity_assurance": {
+              "enum": [
+                "self_declared",
+                "externally_attested"
+              ]
+            }
+          }
+        },
+        "supplied_artifact_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "successor_attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "successor_review_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "outcome": {
+          "enum": [
+            "supplied",
+            "verified",
+            "rejected"
+          ]
+        },
+        "capture_mode": {
+          "enum": [
+            "contemporaneous",
+            "retrospective_backfill"
+          ]
+        },
+        "verification_binding": {
+          "$ref": "#/definitions/verification_binding"
+        }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repair_id",
+        "issue_id",
+        "predecessor_attempt_id",
+        "successor_attempt_id",
+        "context_request_ids",
+        "repair_artifact_refs",
+        "verification_refs",
+        "outcome",
+        "cause",
+        "prevention",
+        "capture_mode"
+      ],
+      "properties": {
+        "repair_id": {
+          "$ref": "#/definitions/text"
+        },
+        "issue_id": {
+          "$ref": "#/definitions/text"
+        },
+        "predecessor_attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "successor_attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "context_request_ids": {
+          "$ref": "#/definitions/texts"
+        },
+        "repair_artifact_refs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/refs"
+            }
+          ],
+          "minItems": 1
+        },
+        "verification_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "outcome": {
+          "enum": [
+            "pending",
+            "verified",
+            "failed"
+          ]
+        },
+        "cause": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "kind",
+            "evidence_refs"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "observed",
+                "supported",
+                "unknown"
+              ]
+            },
+            "kind": {
+              "enum": [
+                "packet_omission",
+                "domain_misreading",
+                "provenance_missing",
+                "output_contract",
+                "report_omission",
+                "formalization_defect",
+                "undetermined"
+              ]
+            },
+            "evidence_refs": {
+              "$ref": "#/definitions/refs"
+            }
+          }
+        },
+        "prevention": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "stage",
+            "rule"
+          ],
+          "properties": {
+            "stage": {
+              "enum": [
+                "intake",
+                "source_inventory",
+                "mapping",
+                "semantic_match",
+                "proof",
+                "result_relationship",
+                "presentation",
+                "orchestration"
+              ]
+            },
+            "rule": {
+              "$ref": "#/definitions/text"
+            }
+          }
+        },
+        "capture_mode": {
+          "enum": [
+            "contemporaneous",
+            "retrospective_backfill"
+          ]
+        },
+        "verification_binding": {
+          "$ref": "#/definitions/verification_binding"
+        }
+      }
+    },
+    "learning_link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "repair_id",
+        "prevention_rule",
+        "skill_version_ref",
+        "lesson_version_ref",
+        "example_refs",
+        "later_dispatch_refs",
+        "evaluation_refs",
+        "state",
+        "capture_mode"
+      ],
+      "properties": {
+        "issue_id": {
+          "$ref": "#/definitions/text"
+        },
+        "repair_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/text"
+            }
+          ]
+        },
+        "prevention_rule": {
+          "$ref": "#/definitions/text"
+        },
+        "skill_version_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        },
+        "lesson_version_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ref"
+            }
+          ]
+        },
+        "example_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "later_dispatch_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "evaluation_refs": {
+          "$ref": "#/definitions/refs"
+        },
+        "state": {
+          "enum": [
+            "candidate",
+            "used",
+            "evaluated"
+          ]
+        },
+        "capture_mode": {
+          "enum": [
+            "contemporaneous",
+            "retrospective_backfill"
+          ]
+        },
+        "use_binding": {
+          "$ref": "#/definitions/learning_use_binding"
+        }
+      }
+    },
+    "scoped_review_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_ref",
+        "result_ref"
+      ],
+      "properties": {
+        "task_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "result_ref": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "learning_use_binding": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/scoped_learning_use_binding"
+        },
+        {
+          "$ref": "#/definitions/managed_source_lesson_use_binding"
+        }
+      ]
+    },
+    "managed_source_lesson_use_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "attempt_id",
+        "task_ref",
+        "result_ref",
+        "catalog_ref"
+      ],
+      "properties": {
+        "method": {
+          "const": "managed_source_lesson_use"
+        },
+        "attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "task_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "result_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "catalog_ref": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "scoped_learning_use_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_id",
+        "task_ref",
+        "result_ref"
+      ],
+      "properties": {
+        "attempt_id": {
+          "$ref": "#/definitions/text"
+        },
+        "task_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "result_ref": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "procedure_review_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "task_ref",
+        "result_ref"
+      ],
+      "properties": {
+        "method": {
+          "const": "source_map_configuration_repair_replay"
+        },
+        "task_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "result_ref": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "verification_binding": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/scoped_review_binding"
+        },
+        {
+          "$ref": "#/definitions/procedure_review_binding"
+        }
+      ]
+    },
+    "original_audit_expectation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "recorded_graph_sha256",
+        "review_material_sha256",
+        "closure_receipt_ref"
+      ],
+      "properties": {
+        "kind": {
+          "const": "original_final_audit_surface"
+        },
+        "recorded_graph_sha256": {
+          "$ref": "#/definitions/sha"
+        },
+        "review_material_sha256": {
+          "$ref": "#/definitions/sha"
+        },
+        "closure_receipt_ref": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "native_finding_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paper",
+        "artifact_ref",
+        "origin_pointer",
+        "native_id",
+        "source_item_ids"
+      ],
+      "properties": {
+        "paper": {
+          "$ref": "#/definitions/text"
+        },
+        "artifact_ref": {
+          "$ref": "#/definitions/ref"
+        },
+        "origin_pointer": {
+          "type": "string",
+          "pattern": "^/defects/(0|[1-9][0-9]*)$"
+        },
+        "native_id": {
+          "$ref": "#/definitions/text"
+        },
+        "source_item_ids": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/texts"
+            }
+          ],
+          "minItems": 1
+        }
+      }
+    },
+    "reported_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "reported_statement_change": {
+          "$ref": "report_sections.schema.json#/definitions/reported_statement_change"
+        },
+        "reported_proof_change": {
+          "$ref": "report_sections.schema.json#/definitions/reported_proof_change"
+        },
+        "reported_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "report_sections.schema.json#/definitions/reported_condition"
+          }
+        },
+        "reported_proof_relationship": {
+          "$ref": "report_sections.schema.json#/definitions/reported_proof_relationship"
+        },
+        "reported_content": {
+          "$ref": "report_sections.schema.json#/definitions/reported_extension_content"
+        }
+      }
+    }
+  }
+}

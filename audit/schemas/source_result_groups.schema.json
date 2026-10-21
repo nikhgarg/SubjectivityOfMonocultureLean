@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Documentary result groups for one exact retained statement map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "artifact_kind",
+    "acceptance_credential",
+    "paper",
+    "source_map_ref",
+    "coverage",
+    "groups"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "artifact_kind": {
+      "const": "source_result_grouping"
+    },
+    "acceptance_credential": {
+      "const": false
+    },
+    "paper": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_map_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "coverage": {
+      "const": "partial"
+    },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "source_kind",
+          "native_label",
+          "printed_label",
+          "presentation_anchor",
+          "member_roster_state",
+          "members"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_kind": {
+            "enum": [
+              "theorem",
+              "lemma",
+              "proposition",
+              "corollary",
+              "claim",
+              "runtime_claim"
+            ]
+          },
+          "native_label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "printed_label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "presentation_anchor": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "artifact_ref",
+              "line_start",
+              "line_end",
+              "slice_sha256"
+            ],
+            "properties": {
+              "artifact_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "line_start": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "line_end": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "slice_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "member_roster_state": {
+            "const": "declared_members_only"
+          },
+          "members": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source_item_id",
+                "source_claim_atom_ids",
+                "source_anchor_index",
+                "member_granularity",
+                "clause_anchor",
+                "membership_basis"
+              ],
+              "properties": {
+                "source_item_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_claim_atom_ids": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "source_anchor_index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "member_granularity": {
+                  "enum": [
+                    "whole_result",
+                    "result_clause"
+                  ]
+                },
+                "clause_anchor": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "line_start",
+                    "line_end",
+                    "slice_sha256"
+                  ],
+                  "properties": {
+                    "line_start": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "line_end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "slice_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "membership_basis": {
+                  "const": "curator_documentary_allocation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

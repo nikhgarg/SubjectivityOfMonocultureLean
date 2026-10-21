@@ -1,0 +1,9 @@
+# Audit evidence workflow
+
+Read `audit/README.md` before formalization/audit capture, closeout, extraction or machine handoff. This paper uses the native AML source-map, comparison, proof-coverage, fidelity, proof-relationship and report owners. The central engine supplies those owners; `audit/aml_audit_source.json` only locates their revision-bound evidence and the paper code.
+
+Retain indispensable audit inputs and outputs in an authorized Git repository before claiming handoff/count readiness. Include source editions and quoted artifacts, maps, selected semantic/proof targets, dependency/axiom inventories, approved context, issued reviewer outputs and identities, comparison/coverage/fidelity/report records and required closeout evidence. A prose report, content digest without retrievable bytes, cache or session log is insufficient. Private source and reviewer bytes may stay in an authorized private repository; the public locator records immutable revisions, relative paths and hashes without publishing those bytes.
+
+When current evidence is absent, recover its files from the producing machine or retained Git history before repeating review. Keep the current edition unavailable until its own native records exist. Never substitute an older draft or infer native acceptance from a report label. Changes to code, source edition or material semantic/dependency context require updating the affected owners and descriptor through the ordinary review workflow.
+
+Use the common central readers to verify/replay and aggregate; repository location grants no acceptance or proof credit. Count each full versioned source item once. Keep theorem statements, proof-only findings, coverage gaps and documentary assertions separate. Put paper-specific classifications/mappings in structured data, never figure-code exceptions. Distinguish local edits/commits from remote publication; preserve the user's current authorization.

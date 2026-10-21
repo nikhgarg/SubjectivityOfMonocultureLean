@@ -19,3 +19,9 @@ lake env lean ProofChecks.lean
 The toolchain, Mathlib, and AppliedModelingLib revisions are pinned. The AppliedModelingLib import supplies the required probability and finite optimization foundations.
 
 The code is licensed under Apache 2.0.
+
+## Audit metadata
+
+The [audit workflow and schemas](audit/README.md) describe the versioned evidence
+locator, public metadata checks and authorized private replay. The full native
+audit evidence is retained privately; the proof code builds without private access.
